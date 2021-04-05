@@ -202,7 +202,7 @@ As we can see from the scatter plot above, Frost isn’t doing too hot. While he
 <p><img src="/2021/04/04/is-it-time-to-jump-ship-on-scott-frost/index_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 Yet again, yikes. Devaney never dipped below the average, and Osborne maintained a pretty solid winning percentage over the 25 years that he coached at Nebraska. Frost on the other hand is nowhere close to even being at the average win percentage. Riley didn’t do too hot either, but at least he showed some sort of promise in his second season. Frost has not given Nebraska fans any sort of promise thus far.</p>
 <p>Alright, alright, we get it. Scott Frost has over-promised and under-delivered thus far. But there’s got to be some metric that Frost is performing well in. Let’s look at one of the most important things for a college football program to maintain their dominance, bowl appearances.</p>
-<p>To do this, we are first going to take our bowl data and filter out all coaches pre-Devaney in order to highlight it in our plot later on. Also, let’s take out Bareny Cotton since he only coached one game for Nebraska.</p>
+<p>To do this, we are first going to take our bowl data and filter out all coaches pre-Devaney in order to highlight it in our plot later on. Also, let’s take out Barney Cotton since he only coached one game for Nebraska.</p>
 <pre class="r"><code>topcoaches&lt;- bowlsdata %&gt;% 
   filter(From &gt;= 1962) %&gt;% 
   filter(Coach != &quot;Barney Cotton&quot;)</code></pre>
