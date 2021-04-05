@@ -206,7 +206,7 @@ Yet again, yikes. Devaney never dipped below the average, and Osborne maintained
 <pre class="r"><code>topcoaches&lt;- bowlsdata %&gt;% 
   filter(From &gt;= 1962) %&gt;% 
   filter(Coach != &quot;Barney Cotton&quot;)</code></pre>
-<p>Now let’s make our plots. I am going to make a bubble chart that shows all the coaches in Nebraska history’s winning percentage and bowl appearances. The size of the bubbles will be their winning percentage and their position on the chart will be the number of appearances compared to the number of years that coach was at Nebraska.</p>
+<p>Now let’s make our plots. I am going to make a bubble chart that shows all the coaches in Nebraska history’s winning percentage and bowl appearances. The size of the bubbles will be their winning percentage and their position on the chart will be the number of appearances compared to the number of years that coach was at Nebraska.The red bubbles will be the coaches since the Devaney-era that we have been looking at thus far.</p>
 <pre class="r"><code>ggplot() + 
   geom_point(
     data=bowlsdata, 
@@ -229,7 +229,7 @@ Yet again, yikes. Devaney never dipped below the average, and Osborne maintained
     panel.grid.minor = element_blank()
     )</code></pre>
 <p><img src="/2021/04/04/is-it-time-to-jump-ship-on-scott-frost/index_files/figure-html/unnamed-chunk-11-1.png" width="672" />
-See that smallest red dot at the very bottom? That’s Scott Frost. In his three years at Nebraska, he has yet to even make it to a bowl game. Even Mike Riley made it to a bowl game in his three years at Nebraska.</p>
+See that smallest red dot at the very bottom? That’s Scott Frost. In his three years at Nebraska, he has yet to make it to a bowl game. Even Mike Riley made it to a bowl game in his three years at Nebraska.</p>
 <p>Scott Frost will have more leniency and patience than probably anybody else in his position due to his legacy at Nebraska, but even the most loyal of Nebraska fans are starting to lose hope. Nobody expects him to be competing for national championships this soon, but any sort of promise at this point would be nice.</p>
 <p>In short, is it justified for Nebraska fans to start jumping ship on Scott Frost as a head coach? Yes. He will always hold a special place in the hearts of Nebraska fans for what he did as a player, but if he wants to keep his coaching job, he better start getting things moving in the right direction, and fast.</p>
 
