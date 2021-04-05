@@ -206,7 +206,7 @@ Yet again, yikes. Devaney never dipped below the average, and Osborne maintained
 <pre class="r"><code>topcoaches&lt;- bowlsdata %&gt;% 
   filter(From &gt;= 1962) %&gt;% 
   filter(Coach != &quot;Barney Cotton&quot;)</code></pre>
-<p>Now let’s make our plots. I am going to make a bubble chart that shows all the coaches in Nebraska history’s winning percentage and bowl appearances. The size of the bubbles will be their winning percentage and their position on the chart will be the number of appearances compared to the number of years that coach was at Nebraska.The red bubbles will be the coaches since the Devaney-era that we have been looking at thus far.</p>
+<p>Now let’s make our plots. I am going to make a bubble chart that shows all the coaches in Nebraska history’s winning percentage and bowl appearances. The size of the bubbles will be their winning percentage and their position on the chart will be the number of appearances compared to the number of years that coach was at Nebraska. The red bubbles will be the coaches since the Devaney-era that we have been looking at thus far.</p>
 <pre class="r"><code>ggplot() + 
   geom_point(
     data=bowlsdata, 
