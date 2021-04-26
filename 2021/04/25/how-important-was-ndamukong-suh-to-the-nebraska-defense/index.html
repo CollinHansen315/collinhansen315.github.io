@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.81.0" />
+
+
+<title>How Important was Ndamukong Suh To The Nebraska Defense? - Collin Hansen&#39;s Github Site</title>
+<meta property="og:title" content="How Important was Ndamukong Suh To The Nebraska Defense? - Collin Hansen&#39;s Github Site">
+
+
+  <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+    <li><a href="https://github.com/rstudio/blogdown">GitHub</a></li>
+    
+    <li><a href="https://twitter.com/collinhansenUNL">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">12 min read</span>
+    
+
+    <h1 class="article-title">How Important was Ndamukong Suh To The Nebraska Defense?</h1>
+
+    
+    <span class="article-date">2021-04-25</span>
+    
+
+    <div class="article-content">
+      
+<script src="/2021/04/25/how-important-was-ndamukong-suh-to-the-nebraska-defense/index_files/header-attrs/header-attrs.js"></script>
+
+
+<p>Ndamukong Suh was, and still is, a force to be reckoned with on the football field. He was one of the most dominant college players to ever play his position, and has carried that legacy with him into the NFL. Opposing teams feared him during his time at Nebraska. Opposing offensive lineman were petrified heading into their games against Nebraska, scrambling their minds trying to figure out any way to stop Suh. He was double teamed, triple teamed even at times, but that hardly slowed him down during his time as a Blackshirt.</p>
+<p>Naturally this leads to the question, just how much did Nebraska’s defense rely on Suh during his time there? How much of the defense did he really account for? Let’s try to put things into perspective.</p>
+<p>Let’s load in our libraries and our data. I am using the Nebraska defensive statistics from the years Suh was an active player at Nebraska. I am discarding the 2005 season as this was his redshirt season and he only accounted for half of a tackle in a single game played all season.</p>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</code></pre>
+<pre><code>## ✓ ggplot2 3.3.3     ✓ purrr   0.3.4
+## ✓ tibble  3.0.5     ✓ dplyr   1.0.3
+## ✓ tidyr   1.1.2     ✓ stringr 1.4.0
+## ✓ readr   1.4.0     ✓ forcats 0.5.1</code></pre>
+<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(waffle)
+library(ggalt)</code></pre>
+<pre><code>## Registered S3 methods overwritten by &#39;ggalt&#39;:
+##   method                  from   
+##   grid.draw.absoluteGrob  ggplot2
+##   grobHeight.absoluteGrob ggplot2
+##   grobWidth.absoluteGrob  ggplot2
+##   grobX.absoluteGrob      ggplot2
+##   grobY.absoluteGrob      ggplot2</code></pre>
+<pre class="r"><code>library(rvest)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;rvest&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:readr&#39;:
+## 
+##     guess_encoding</code></pre>
+<pre class="r"><code>suh06 &lt;- read_csv(&quot;data/Suh_data06.csv&quot;)</code></pre>
+<pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1], &#39;X2&#39; [2], &#39;X4&#39; [4], &#39;X5&#39; [5],
+## &#39;X6&#39; [6], &#39;X7&#39; [7], &#39;X9&#39; [9], &#39;X10&#39; [10], &#39;X11&#39; [11], &#39;X12&#39; [12], &#39;X14&#39; [14],
+## &#39;X15&#39; [15], &#39;X16&#39; [16]</code></pre>
+<pre><code>## 
+## ── Column specification ────────────────────────────────────────────────────────
+## cols(
+##   X1 = col_character(),
+##   X2 = col_character(),
+##   Tackles = col_character(),
+##   X4 = col_character(),
+##   X5 = col_character(),
+##   X6 = col_character(),
+##   X7 = col_character(),
+##   `Def Int` = col_character(),
+##   X9 = col_character(),
+##   X10 = col_character(),
+##   X11 = col_character(),
+##   X12 = col_character(),
+##   Fumbles = col_character(),
+##   X14 = col_character(),
+##   X15 = col_character(),
+##   X16 = col_character()
+## )</code></pre>
+<pre class="r"><code>suh07 &lt;- read_csv(&quot;data/Suh_data07.csv&quot;)</code></pre>
+<pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1], &#39;X2&#39; [2], &#39;X4&#39; [4], &#39;X5&#39; [5],
+## &#39;X6&#39; [6], &#39;X7&#39; [7], &#39;X9&#39; [9], &#39;X10&#39; [10], &#39;X11&#39; [11], &#39;X12&#39; [12], &#39;X14&#39; [14],
+## &#39;X15&#39; [15], &#39;X16&#39; [16]</code></pre>
+<pre><code>## 
+## ── Column specification ────────────────────────────────────────────────────────
+## cols(
+##   X1 = col_character(),
+##   X2 = col_character(),
+##   Tackles = col_character(),
+##   X4 = col_character(),
+##   X5 = col_character(),
+##   X6 = col_character(),
+##   X7 = col_character(),
+##   `Def Int` = col_character(),
+##   X9 = col_character(),
+##   X10 = col_character(),
+##   X11 = col_character(),
+##   X12 = col_character(),
+##   Fumbles = col_character(),
+##   X14 = col_character(),
+##   X15 = col_character(),
+##   X16 = col_character()
+## )</code></pre>
+<pre class="r"><code>suh08 &lt;- read_csv(&quot;data/Suh_data08.csv&quot;)</code></pre>
+<pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1], &#39;X2&#39; [2], &#39;X4&#39; [4], &#39;X5&#39; [5],
+## &#39;X6&#39; [6], &#39;X7&#39; [7], &#39;X9&#39; [9], &#39;X10&#39; [10], &#39;X11&#39; [11], &#39;X12&#39; [12], &#39;X14&#39; [14],
+## &#39;X15&#39; [15], &#39;X16&#39; [16]</code></pre>
+<pre><code>## 
+## ── Column specification ────────────────────────────────────────────────────────
+## cols(
+##   X1 = col_character(),
+##   X2 = col_character(),
+##   Tackles = col_character(),
+##   X4 = col_character(),
+##   X5 = col_character(),
+##   X6 = col_character(),
+##   X7 = col_character(),
+##   `Def Int` = col_character(),
+##   X9 = col_character(),
+##   X10 = col_character(),
+##   X11 = col_character(),
+##   X12 = col_character(),
+##   Fumbles = col_character(),
+##   X14 = col_character(),
+##   X15 = col_character(),
+##   X16 = col_character()
+## )</code></pre>
+<pre class="r"><code>suh09 &lt;- read_csv(&quot;data/Suh_data09.csv&quot;)</code></pre>
+<pre><code>## Warning: Missing column names filled in: &#39;X1&#39; [1], &#39;X2&#39; [2], &#39;X4&#39; [4], &#39;X5&#39; [5],
+## &#39;X6&#39; [6], &#39;X7&#39; [7], &#39;X9&#39; [9], &#39;X10&#39; [10], &#39;X11&#39; [11], &#39;X12&#39; [12], &#39;X14&#39; [14],
+## &#39;X15&#39; [15], &#39;X16&#39; [16]</code></pre>
+<pre><code>## 
+## ── Column specification ────────────────────────────────────────────────────────
+## cols(
+##   X1 = col_character(),
+##   X2 = col_character(),
+##   Tackles = col_character(),
+##   X4 = col_character(),
+##   X5 = col_character(),
+##   X6 = col_character(),
+##   X7 = col_character(),
+##   `Def Int` = col_character(),
+##   X9 = col_character(),
+##   X10 = col_character(),
+##   X11 = col_character(),
+##   X12 = col_character(),
+##   Fumbles = col_character(),
+##   X14 = col_character(),
+##   X15 = col_character(),
+##   X16 = col_character()
+## )</code></pre>
+<p>Now that we have our data, let’s go ahead and combine that statistics from all four seasons into one coherent dataframe so that we can analyze Suh over his career at Nebraska. We are going to have to reformat it a bit to make it readable. We are also going to add a year column so that we can see the change year-to-year in our combined dataframe.</p>
+<pre class="r"><code>suh06 &lt;- suh06 %&gt;% 
+  rename(Rank=X1,
+         Player=X2,
+         `Solo Tackles`= Tackles,
+         `Assisted Tackles`=X4,
+         `Total Tackles`=X5,
+         `Tackles For Loss`=X6,
+         Sacks=X7,
+         `Int Return Yds`=X9,
+         `Avg Int Return Yds` =X10,
+         `Int TD`=X11,
+         `Passes Defended`=X12,
+         `Fumbles Recovered`= Fumbles,
+         `Fumble Recoverey Return Yards`=X14,
+         `Fumble TDs`= X15,
+         `Forced Fumbles`=X16) %&gt;% 
+  filter(Rank != &quot;Rk&quot;)%&gt;% 
+  mutate_at(vars(-Player), as.numeric)
+
+suh07 &lt;- suh07 %&gt;% 
+  rename(Rank=X1,
+         Player=X2,
+         `Solo Tackles`= Tackles,
+         `Assisted Tackles`=X4,
+         `Total Tackles`=X5,
+         `Tackles For Loss`=X6,
+         Sacks=X7,
+         `Int Return Yds`=X9,
+         `Avg Int Return Yds` =X10,
+         `Int TD`=X11,
+         `Passes Defended`=X12,
+         `Fumbles Recovered`= Fumbles,
+         `Fumble Recoverey Return Yards`=X14,
+         `Fumble TDs`= X15,
+         `Forced Fumbles`=X16) %&gt;% 
+  filter(Rank != &quot;Rk&quot;)%&gt;% 
+  mutate_at(vars(-Player), as.numeric)
+
+suh08 &lt;- suh08 %&gt;% 
+  rename(Rank=X1,
+         Player=X2,
+         `Solo Tackles`= Tackles,
+         `Assisted Tackles`=X4,
+         `Total Tackles`=X5,
+         `Tackles For Loss`=X6,
+         Sacks=X7,
+         `Int Return Yds`=X9,
+         `Avg Int Return Yds` =X10,
+         `Int TD`=X11,
+         `Passes Defended`=X12,
+         `Fumbles Recovered`= Fumbles,
+         `Fumble Recoverey Return Yards`=X14,
+         `Fumble TDs`= X15,
+         `Forced Fumbles`=X16) %&gt;% 
+  filter(Rank != &quot;Rk&quot;)%&gt;% 
+  mutate_at(vars(-Player), as.numeric)
+
+suh09 &lt;- suh09 %&gt;% 
+  rename(Rank=X1,
+         Player=X2,
+         `Solo Tackles`= Tackles,
+         `Assisted Tackles`=X4,
+         `Total Tackles`=X5,
+         `Tackles For Loss`=X6,
+         Sacks=X7,
+         `Int Return Yds`=X9,
+         `Avg Int Return Yds` =X10,
+         `Int TD`=X11,
+         `Passes Defended`=X12,
+         `Fumbles Recovered`= Fumbles,
+         `Fumble Recoverey Return Yards`=X14,
+         `Fumble TDs`= X15,
+         `Forced Fumbles`=X16) %&gt;% 
+  filter(Rank != &quot;Rk&quot;)%&gt;% 
+  mutate_at(vars(-Player), as.numeric)</code></pre>
+<pre class="r"><code>suh06season &lt;- suh06 %&gt;% 
+  mutate(YEAR= 2006)
+
+suh07season &lt;- suh07 %&gt;% 
+  mutate(YEAR= 2007)
+
+suh08season &lt;- suh08 %&gt;% 
+  mutate(YEAR= 2008)
+
+suh09season &lt;- suh09 %&gt;% 
+  mutate(YEAR= 2009)</code></pre>
+<pre class="r"><code>suhcareer &lt;- bind_rows(suh06season, suh07season, suh08season, suh09season)</code></pre>
+<p>Now let’s look at one of the most important statistics for the defensive lineman position, tackles for loss. Suh spent a lot of his time at Nebraska in the opposing offense’s backfield, but just how much havoc was he able to cause back there? And how does that stack up against the rest of the defense?</p>
+<p>To take a look at this, we are going to take our combined data frame and find the total number of tackles for loss and sacks that all Nebraska defensive players had in the years that Suh was an active player. We are then going to take the top 15 players with the most tackles for loss and put them into a dumbbell chart to see how they stack up against one another.</p>
+<pre class="r"><code>suhcareertfl &lt;- suhcareer %&gt;% 
+  select(Player,`Tackles For Loss`, Sacks) %&gt;% 
+  group_by(Player) %&gt;%
+  summarise(
+    `Career Tackles For Loss`= sum(`Tackles For Loss`),
+    `Career Sacks` =sum(Sacks)) %&gt;% 
+  arrange(desc(`Career Tackles For Loss`)) %&gt;% 
+  top_n(15)</code></pre>
+<pre><code>## Selecting by Career Sacks</code></pre>
+<pre class="r"><code>ggplot() + 
+  geom_dumbbell(data=suhcareertfl, 
+    aes(y=reorder(Player,`Career Tackles For Loss`), x= `Career Tackles For Loss`, xend= `Career Sacks`),
+    size = 1,
+    color = &quot;grey&quot;,
+    colour_x = &quot;green&quot;,
+    colour_xend = &quot;blue&quot;) +
+labs(
+    x=&quot;Tackles Behind Line of Scrimmage&quot;, 
+    y=&quot;Player&quot;, 
+    title=&quot;Blackshirts With The Most Tackles Behind The Line of Scrimmage&quot;, 
+    subtitle=&quot;In his time at Nebraska, Suh had more sacks than any other player had total tackles for loss&quot;,
+    caption=&quot;Tackles For Loss = Green, Sacks = Blue                                                                        Source: sports-reference.com | Chart by Collin Hansen&quot;)+ 
+  theme_minimal()+
+   theme(
+    plot.title = element_text(size = 12.5, face = &quot;bold&quot;),
+    axis.title = element_text(size = 10), 
+    plot.subtitle = element_text(size=9),
+    plot.caption = element_text(size = 6),
+    panel.grid.minor = element_blank()
+    )</code></pre>
+<p><img src="/2021/04/25/how-important-was-ndamukong-suh-to-the-nebraska-defense/index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+In this chart, the green dot represents the total tackles for loss each defensive player had and the blue dot represents how many of those tackles for loss were sacks. As you can see, most players are grouped together pretty tightly, with the exception of Ndamukong Suh. Suh had more sacks than any other player had total tackles for loss during his time at Nebraska. His total tackles for loss is over double the amount of Zach Potter who ranks second in this list.</p>
+<p>This defense had some big names and some great players in it at the time, but Suh really catapulted himself into a league of his own here. No one even comes close to matching his tackles for loss statistics which just goes to show just how special Suh was at the defensive line position for Nebraska. He pulled his weight and then some, and he left no question about how valuable of an asset he was in the regard.</p>
+<p>Let’s take a look at just how valuable he truly was in the tackles for loss category. Let’s compare Suh against the rest of the team to see how much he really contributed to the team’s totals in these two categories during his most dominant season in 2009. To do this, we are going to find the team’s total number of sacks and overall tackles for loss during the 2009 season and make a waffle chart comparing Suh against the rest of the team to show his contribution to these team statistics.</p>
+<pre class="r"><code>suh09team &lt;- suh09season %&gt;% 
+  select(`Tackles For Loss`, Sacks) %&gt;% 
+  summarise(
+    `Team Tackles For Loss`= sum(`Tackles For Loss`),
+    `Team Sacks` =sum(Sacks))</code></pre>
+<pre class="r"><code>suh09_tacklesforloss &lt;- c(&quot;Suh&quot;=20.5, &quot;Rest of Team&quot;=(93-20.5))
+suh09_sacks &lt;- c(&quot;Suh&quot;=12, &quot;Rest of Team&quot;=(44-12))</code></pre>
+<pre class="r"><code>iron(
+  waffle(suh09_tacklesforloss,
+         rows = 5, 
+        title=&quot;Suh&#39;s Tackle For Loss Contribution&quot;, 
+        xlab=&quot;1 square = 1 tackle for loss&quot;, 
+        colors = c(&quot;red&quot;, &quot;black&quot;)
+        ),
+  waffle(suh09_sacks,
+         rows = 2, 
+        title=&quot;Suh&#39;s Sack Contribution&quot;, 
+        xlab=&quot;1 square = 1 sack&quot;,
+        colors = c(&quot;red&quot;, &quot;black&quot;)
+        ))</code></pre>
+<p><img src="/2021/04/25/how-important-was-ndamukong-suh-to-the-nebraska-defense/index_files/figure-html/unnamed-chunk-10-1.png" width="672" />
+While this waffle chart may not look completely jaw-dropping at first glance, really think about it for a second. Suh is just one player, a player who was almost constantly double or triple teamed at the line of scrimmage by that time, contributing for what looks to be about every one in five of the team’s tackles for loss/sacks. That’s pretty remarkable considering how many playeers and positions contributed to these team statistics.</p>
+<p>Tackles for loss and sacks are great statistics for defensive lineman, but it’s kind of expected that they are going to have great numbers in these statistics given that their sole job is to line up and try and get into the backfield every play. While Suh definitely still stood out tremendously and pulled his own in the tackles for loss and sacks categories, let’s see how he fared in a statistic more fair to the rest of the defense, overall tackles.</p>
+<p>To do this, lets make a line chart to see how Suh ranked in total tackles for each of the years he was at Nebraska. Let’s first filter out Suh from the data so that we can highlight and compare him to the rest of the defense, then make our chart with Suh highlighted in red so we can see his progression from year-to-year.</p>
+<pre class="r"><code>suhtackles &lt;- suhcareer %&gt;% 
+  filter(Player == &quot;Ndamukong Suh&quot;)</code></pre>
+<pre class="r"><code>ggplot() + 
+  geom_line(data=suhcareer, aes(x=YEAR, y=`Total Tackles`, group=Player), color=&quot;grey&quot;)+
+  geom_point(data=suhcareer, aes(x=YEAR,y=`Total Tackles`, group=Player), color=&quot;grey&quot;, size= 1.5)+
+  geom_line(data=suhtackles, aes(x=YEAR, y=`Total Tackles`, group=Player), color=&quot;red&quot;)+
+  geom_point(data=suhtackles, aes(x=YEAR, y=`Total Tackles`, group=Player), color=&quot;red&quot;, size = 1.5) +
+  scale_y_continuous(limits = c(0, 92))+
+  labs(
+    x=&quot;Year&quot;, 
+    y=&quot;Total Tackles&quot;, 
+    title=&quot;Blackshirts With The Most Total Tackles From 2006-2009&quot;, 
+    subtitle=&quot;Suh led the Blackshirts defense in tackles for his last two seasons at Nebraska&quot;,
+    caption=&quot;Source: sports-reference.com | Chart by Collin Hansen&quot;)+ 
+  theme_minimal()+
+   theme(
+    plot.title = element_text(size = 14, face = &quot;bold&quot;),
+    axis.title = element_text(size = 10), 
+    plot.subtitle = element_text(size=10),
+    plot.caption = element_text(size = 6))</code></pre>
+<p><img src="/2021/04/25/how-important-was-ndamukong-suh-to-the-nebraska-defense/index_files/figure-html/unnamed-chunk-12-1.png" width="672" />
+As you can see, Suh grew tremendously throughout his collegiate career when it came to total tackles. He made a huge leap in year three where he went from the middle-of-the-pack the year before to team leader in total tackles. This was the first time a defensive lineman had led the blackshirts in tackles since 1973, and he put up even more tackles the next season leading the team once again.</p>
+<p>Suh once again proved how important he was to this Nebraska defense, leading the team in tackles for his final two seasons and setting the example for the rest of the team. He proved once again just how big of an asset he was and how important he was to this team.</p>
+<p>Another interesting thing to note is the distribution of number of tackles once Suh really became dominant. In 2008, Suh had his big leap, but most of the players were still at the middle and bottom of the distribution contributing for about half of the number of tackles that Suh and one other player put up. By 2009, not only Suh, but many other players began to pull their weight a bit more and contribute more tackles. We see a lot more players contributing for high numbers of tackles in 2009 than we do in 2008. Could this be due to Suh’s leadership and holding the rest of the team up to a higher standard? Could this really be another way Suh is contributing to the defense overall? It’s hard to say definitively, but if so that is pretty remarkable and it might even be the most important contribution we’ve seen yet.</p>
+<p>Suh had a pretty remarkable collegiate career at Nebraska. He left behind a legacy that will stand the test of time and has raised the standards for Nebraska players that have come after him. His 2009 season is widely regarded as the most dominant season by any defensive lineman in the history of college football. This season was capped off by what many consider the best single performance by a defensive lineman when Suh threw Texas quarterback Colt McCoy around like a ragdoll for four quarters. He is one of the few defensive lineman to ever be a Heisman finalist, and if defensive players stood a fair shot at the award instead of just handing it out to offensive players every year, he just might have won it. His contributions to the blackshirts defense, the team as a whole, the city of Lincoln, and the state of Nebraska will never be forgotten as many new players try to fill his shoes season after season.</p>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+
+    
+  </body>
+</html>
+
