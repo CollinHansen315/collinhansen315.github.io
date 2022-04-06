@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.81.0" />
+
+
+<title>March Sadness - Collin Hansen&#39;s Github Site</title>
+<meta property="og:title" content="March Sadness - Collin Hansen&#39;s Github Site">
+
+
+  <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+    <li><a href="https://github.com/rstudio/blogdown">GitHub</a></li>
+    
+    <li><a href="https://twitter.com/collinhansenUNL">Twitter</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">11 min read</span>
+    
+
+    <h1 class="article-title">March Sadness</h1>
+
+    
+    <span class="article-date">2022-04-06</span>
+    
+
+    <div class="article-content">
+      
+<script src="/2022/04/06/march-sadness/index_files/kePrint/kePrint.js"></script>
+<link href="/2022/04/06/march-sadness/index_files/lightable/lightable.css" rel="stylesheet" />
+
+
+<p>This March, for the first time in my life, I filled out a March Madness bracket.</p>
+<p>While this may not be exciting news for many, it’s exciting to me. I’m not much of a college basketball guy at all. In fact, the most college basketball I had watched in my life before this March was catching the end of a few national championship games here and there in years past. I’ve always wished I could get into March Madness like everybody else. I’ve wished that I could fill out a bracket, watch all the games, and just enjoy March Madness the way so many people do. The reason I’ve never filled out a bracket is that I wouldn’t know who to pick in any matchup, so I built an algorithm to pick for me.</p>
+<p>That’s right, I got tired of watching everybody fill out their brackets and have so much fun watching them through every March, so I created a model to fill out a bracket for me. Finally, I had a reason to get into March Madness and enjoy this experience that people go crazy for every year.</p>
+<p>So how’d I do it you may ask?</p>
+<p>Well, it wasn’t easy. I took my limited knowledge of basketball and the data I could find to create an algorithm that uses predictors to predict outcomes of March Madness games.</p>
+<p>In the feature engineering of my model, I have chosen what I believe to be a good set of predictors from the data available. I’m a big believer in efficiency in basketball. I think in a game of basketball, you have a number of possessions per game and the team that can do more with the possessions they have should generally be the team that reigns victorious. Because of this, I have included several measures of efficiency in my feature engineering. The first of these efficiency measures I’ve chosen is adjusted efficiency margin from kenpom. Kenpom’s rankings come directly from this metric and this metric only. Kenpom seems like a smart guy, and I believe this metric is a good indicator of how good a team is, so I put it in. I didn’t think just the adjusted efficiency margin would be enough to satisfy my efficiency centered mindset of basketball, especially because you can’t really make this a rolling or cumulative metric. Because of this, I chose to also include offensive and defensive efficiency, and I made these rolling metrics because I feel that teams can get hot and cold throughout the season and I want to capture how efficent a team is going into the tournament. I also chose to create a rolling metric for efficiency margin since Kenpom’s adjusted efficincy margin is stagnant. Keping in line with efficiency, I chose to create a rolling metric for effective field goal percentage to see how well each team is using their possessions going into the tournament. I wanted another shooting metric to measure how well a team is shooting the ball and getting to the line, so I added a rolling metric for true shooting percentage. I also wanted another metric for free throw shooting, so I added a cumulative free throw factor metric to see how a team is getting to the line and scoring when they’re there over the course of the season.</p>
+<p>Again, my mindset here is that good teams make the most out of the possessions they have. I also believe that good teams secure more possessions to give themselves more opportunities throughout the game, so I have included a rolling metric that measures how many possessions a team is getting per game going into the tournament. In order to get more possessions as well as take possessions away from the opponent, a team must rebound well so I have created a cumulative metric to measure offensive and defensive rebounding percentages. I chose to go cumulative on this metric because players don’t get taller throughout the season and teams don’t really go on hot or cold rebounding streaks. Along with rebounds, turnovers are a way teams can secure more possessions while also taking away possessions from the opponent. I have added a metric to measure the team’s turnover factor, and I chose to go cumulative again because teams don’t really get hot and cold with turnovers like they do with other metrics.</p>
+<p>The model I chose to use with my predictors is a logistic regression model. I tested my predictors with a logistic regression model, random forest, and sports vector machine, and the logistic regression model proved to be the most accurate.</p>
+<p>I think that a team that has more possessions than their opponent while being efficient with the possessions they have should win time and time again, and I believe I have built a model that will reward a team for doing so.</p>
+<table class="table table-striped table-condensed" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+variable
+</th>
+<th style="text-align:left;">
+role
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+team_adj_em
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+opponent_adj_em
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+team_cumulative_mean_turnover_factor
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+opponent_cumulative_mean_turnover_factor
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+team_cumulative_mean_orb
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+opponent_cumulative_mean_orb
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+team_cumulative_mean_drb
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+opponent_cumulative_mean_drb
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+team_cumulative_mean_free_throw_factor
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+opponent_cumulative_mean_free_throw_factor
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+team_rolling_o_eff
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+opponent_rolling_o_eff
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+team_rolling_d_eff
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+opponent_rolling_d_eff
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+team_rolling_possessions
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+opponent_rolling_possessions
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+team_rolling_effective_fg_pct
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+opponent_rolling_effective_fg_pct
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+team_rolling_em
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+opponent_rolling_em
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+team_rolling_true_shooting_percentage
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+opponent_rolling_true_shooting_percentage
+</td>
+<td style="text-align:left;">
+predictor
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+TeamResult
+</td>
+<td style="text-align:left;">
+outcome
+</td>
+</tr>
+</tbody>
+</table>
+<p>Once I had chosen my predictors and built my model, I used it to fill out my bracket, which can be seen here:</p>
+<p>(<a href="https://fantasy.espn.com/tournament-challenge-bracket/2022/en/entry?entryID=67826664" class="uri">https://fantasy.espn.com/tournament-challenge-bracket/2022/en/entry?entryID=67826664</a>).</p>
+<p>As you can see from my bracket, my model made some incorrect predictions in some very meaningful games. Let’s take a closer look at one of the rounds that hurt me the most, round two.</p>
+<table class="table table-striped table-condensed" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+team_short_display_name
+</th>
+<th style="text-align:left;">
+.pred_class
+</th>
+<th style="text-align:left;">
+opponent_short_display_name
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+San Francisco
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:left;">
+Kentucky
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Kansas
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+San Diego State
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arizona
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+Seton Hall
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Michigan
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:left;">
+Tennessee
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Gonzaga
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+Memphis
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+LSU
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+Wisconsin
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Houston
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+Illinois
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+USC
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:left;">
+Auburn
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Alabama
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:left;">
+Texas Tech
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Iowa
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+Providence
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Texas
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:left;">
+Purdue
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Saint Mary’s
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:left;">
+UCLA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+UConn
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+Arkansas
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Loyola Chicago
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:left;">
+Villanova
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Michigan State
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:left;">
+Duke
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Baylor
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+North Carolina
+</td>
+</tr>
+</tbody>
+</table>
+<p>This one stung. I had Baylor and Auburn finishing in my final four, but they took an early exit here in the second round. This one hurt, but the sweet sixteen was the dagger on my bracket:</p>
+<table class="table table-striped table-condensed" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+team_short_display_name
+</th>
+<th style="text-align:left;">
+.pred_class
+</th>
+<th style="text-align:left;">
+opponent_short_display_name
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Kansas
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+Iowa
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Purdue
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:left;">
+Kentucky
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+LSU
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:left;">
+Auburn
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Baylor
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+UCLA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Arizona
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+Houston
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Gonzaga
+</td>
+<td style="text-align:left;">
+W
+</td>
+<td style="text-align:left;">
+Arkansas
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Tennessee
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:left;">
+Villanova
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Texas Tech
+</td>
+<td style="text-align:left;">
+L
+</td>
+<td style="text-align:left;">
+Duke
+</td>
+</tr>
+</tbody>
+</table>
+<p>And just like that, Arizona and Gonzaga went down in the sweet sixteen, leaving none of my model’s predictions for the final four still alive.</p>
+<p>My model predicted a Gonzaga vs. Arizona national championship for this year’s March Madness. None of my model’s final four predictions even made it past the sweet sixteen. I was so confident in this model, but it didn’t perform the way I wanted it to despite all the work that went into it. The only question I’m left with is …</p>
+<p>Where did I go wrong?</p>
+<p>My first mistake was trusting that a team like Arizona wouldn’t choke late in the tournament, should’ve seen that one coming. But in all reality, no model out there could predict the Cinderella story of Doug Edert and the St. Peter’s Peacocks. I can’t even be that upset, it was incredible to watch. The odds were stacked against them, and they shocked the world with upset after upset. The upset that put them on the map of course was the Peacocks taking down Kentucky in the opening round of the tournament. I, like just about everybody else that filled out a bracket, had Kentucky stomping on St. Peter’s and going far into the tournament. That obviously didn’t happen.</p>
+<p>To show how unlikely this Cinderella story was, I made a residuals graph that shows how teams were performing going into the first round of the tournament when I created my model. I chose to use adjusted efficiency margin and rolling effective field goal percentage to show how each team was playing at the end of the season. The blue line represents the expected performance given these two predictors, so teams below the line are under-performing while teams above the line are over-performing.</p>
+<p><img src="/2022/04/06/march-sadness/index_files/figure-html/unnamed-chunk-7-1.png" width="672" />
+As you can see, Kentucky had one of the best adjusted efficiency margins in the NCAA while also having one of the best effective field goal percentages going into the tournament. These two predictors alone makes it easy to understand why my model incorrectly predicted this upset. Kentucky’s performance going into the tournament was far above their predicted performance, and St. Peter’s was actually under-performing at the end of the season. Kentucky SHOULD have won, along with Murray State and Purdue. St. Peter’s run was one for the history books because of their unprecedented performance in this year’s tournament.</p>
+<p>So yes, nobody saw Doug and the peacocks performing the way they did in the tournament, but my model still didn’t have St. Peter’s or any of the teams they faced in my final four. So what happened there? Why did none of my predicted final four teams make it past the Sweet Sixteen?</p>
+<p>In short, they kind of choked. All of my predicted final four teams severely under-performed in the games they were eliminated in. Their metrics were significantly below their season and tournament averages in some of the areas where it mattered the most. I have built a series of charts that shows the predicted metrics of each of my final four teams going into their final game, and the metrics they actually produced in that game where they ended up being eliminated.</p>
+<p><img src="/2022/04/06/march-sadness/index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+The red dots in these charts represent the expected values for each team in each of these metrics, and the blue dot represents each team’s actual performance in that category for the game in which they got eliminated. As you can see, each of my final four teams deviated significantly from their expected output in their final game. The expected metrics were calculated based on each teams average performance in each metric over the course of the season and the NCAA tournament up until their final game. Auburn was the only team to out-perform their expected output in any of the charts after finishing with a rebound differential of +8 in their loss despite a predicted rebound differential of 4.8. The rest of each chart is very telling, each of my final four teams played significantly worse than they should’ve in their final game. They choked. None of my final four teams finished with a true shooting percentage above 47% despite each team’s season &amp; tournament metrics predicting true shooting percentages above 54%. Each team’s efficiency margin was significantly negative despite high predicted efficiency margins for each team going into their final game. And finally, Arizona and Baylor were out-rebounded in their final game despite it being predicted that they would out rebound their opponent by a somewhat significant margin.</p>
+<p>All in all, my model could’ve done a lot worse. This was my first time ever filling out a March Madness bracket and I ended up doing better than over half of all brackets submitted, so that’s something to hang my hat on at least. I actually had a lot of fun making this model and filling out my bracket, and I will most definitely continue to do this every March Madness. For next year, I plan to make a few different variations of the predictors in my model to fill out a few brackets.</p>
+<p>For one of my brackets, I would like to use a much simpler model to predict the game outcomes. I heard that someone created a model that used just points scored and points allowed to predict games, and it performed much better than you would think. I would like to create a model similar to this one that takes out all the crazy metrics I created and used in this model and just uses the most important metric in deciding the outcome of a game, what team scored more points than their opponent.</p>
+<p>For another bracket, I would like to modify my current model slightly to include some more predictors. I used 22 predictors for my model, but I know there are more metrics I can find or create to hopefully produce a more accurate model. In this improved model, i would also like to create some sort of predictor metric that takes fatigue and injury into account. Teams like Creighton really struggled in the tournament because they were not at full strength, and they weren’t even close to being at full strength actually. This makes it easy to explain why they took an early exit out of the tournament despite being one of the stronger teams. If I could build a metric that accounts for an injury factor, my model could more accurately predict games with teams like Creighton by realizing that some of the most important players to a team’s success may not be on the court for that game.</p>
+<p>I would also like to create a metric that uses something like strength of schedule to help predict a team’s fatigue level going into the tournament. Teams that play tough team after tough team all season long are bound to be more tired and fatigued come March compared to teams that were able to let off the gas so-to-speak throughout the season and stay well rested. If I could create a metric that accounts for this in my predictions, I may be able to better predict the outcomes of games in the tournament, especially in the first couple rounds. This could help the accuracy of my bracket significantly because the first round of games in the tournament is arguably the most important round. The first round is a tone-setter, and the more teams in your bracket that make it out of the first round, the more points you can potentially score in the tournament.</p>
+<p>I am very glad that I finally have a reason to watch March Madness, and I am eager to see how my models perform in next year’s tournament.</p>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+    
+
+    
+  </body>
+</html>
+
